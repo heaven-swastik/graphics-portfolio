@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWASTIK | Creative Visionary</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --dark-green: #0f1f1a;
+            --light-green: #1a3a2e;
+            --golden: #d4af37;
+            --light-golden: #f5d76e;
+            --text-color: #f5f5f5;
+            --accent: #d4af37;
+            --bg-color: var(--dark-green);
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            cursor: none;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* NOISE OVERLAY */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            mix-blend-mode: screen;
+        }
+
+        /* CUSTOM CURSOR */
+        .cursor {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: all 0.2s ease-out;
+            mix-blend-mode: lighten;
+            box-shadow: inset 0 0 8px rgba(212, 175, 55, 0.3);
+        }
+
+        .cursor.active {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(212, 175, 55, 0.2);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 5vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(15, 31, 26, 0.95), rgba(15, 31, 26, 0.7));
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* HERO SECTION */
+        .hero-wrapper {
+            height: 150vh;
+            position: relative;
+        }
+
+        .hero {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            opacity: 1;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 6.5rem);
+            font-family: var(--font-display);
+            color: var(--light-golden);
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            line-height: 1.1;
+        }
+
+        .hero-tagline {
+            font-size: clamp(1.1rem, 3vw, 1.8rem);
+            color: rgba(245, 245, 245, 0.85);
+            font-weight: 300;
+            font-family: var(--font-body);
+            max-width: 800px;
+            padding: 0vw;
+            margin-bottom: 50px;
+            line-height: 1.8;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--golden), var(--light-golden));
+            color: var(--dark-green);
+            padding: 16px 48px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            font-size: 0.95rem;
+            box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .hero-cta:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(212, 175, 55, 0.5);
+        }
+
+        /* FLOATING SHAPES */
+        .shape {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        .shape-circle {
+            border-radius: 50%;
+            background: var(--golden);
+        }
+
+        /* PORTFOLIO SECTION */
+        .portfolio-section {
+            padding: 140px 5vw;
+            background: linear-gradient(135deg, var(--dark-green) 0%, var(--light-green) 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: var(--light-golden);
+            text-align: center;
+            margin-bottom: 100px;
+            letter-spacing: 0.02em;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .portfolio-item {
+            background: rgba(26, 42, 36, 0.8);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-16px);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.5);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            filter: grayscale(100%) brightness(0.9);
+            transition: all 0.5s ease;
+            display: block;
+        }
+
+        .portfolio-item:hover img {
+            filter: grayscale(0%) brightness(1.1);
+            transform: scale(1.05);
+        }
+
+        .portfolio-caption {
+            padding: 30px;
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--light-golden);
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* SKILLS SECTION */
+        .skills-section {
+            padding: 140px 10vw;
+            background: var(--dark-green);
+            text-align: center;
+            position: relative;
+        }
+
+        .skills-content {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: rgba(245, 245, 245, 0.9);
+            font-family: var(--font-body);
+            max-width: 900px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .skills-content p {
+            margin-bottom: 30px;
+        }
+
+        .highlight {
+            color: var(--golden);
+            font-weight: 600;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--golden);
+            opacity: 0.5;
+        }
+
+        /* TOOLS SECTION */
+        .tools-section {
+            padding: 140px 5vw;
+            background: linear-gradient(135deg, var(--light-green) 0%, #132621 100%);
+            text-align: center;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tool-item {
+            background: rgba(26, 42, 36, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 12px;
+            padding: 30px 20px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .tool-item:hover {
+            transform: translateY(-12px);
+            border-color: var(--golden);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .tool-item img {
+            height: 56px;
+            width: 56px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            filter: brightness(0.95);
+        }
+
+        .tool-item:hover img {
+            filter: brightness(1.2);
+            transform: scale(1.1);
+        }
+
+        .tool-item h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--light-golden);
+            margin: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 50px 5vw;
+            text-align: center;
+            background: rgba(15, 31, 26, 0.9);
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            color: rgba(245, 245, 245, 0.6);
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .cursor {
+                display: none;
+            }
+
+            body {
+                cursor: auto;
+            }
+
+            nav {
+                gap: 20px;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .hero-title {
+                font-size: clamp(2rem, 8vw, 3.5rem);
+            }
+        }
+        .hero-cta {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 14px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #0a1a12;
+    background: linear-gradient(135deg, #e7c66b 0%, #c9a850 100%);
+    box-shadow: 0 4px 15px rgba(255, 215, 100, 0.25);
+    transition: 0.3s ease;
+    border: 1px solid rgba(255, 215, 100, 0.4);
+}
+
+/* Hover animation */
+.hero-cta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(255, 215, 100, 0.45);
+    background: linear-gradient(135deg, #f3d98d 0%, #d9b960 100%);
+}
+
+/* Optional: glow ring on hover */
+.hero-cta:active {
+    transform: scale(0.97);
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="noise"></div>
+    <div class="cursor"></div>
+
+    <header>
+        <a href="#" class="logo">SWASTIK</a>
+        <nav>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#skills">Skills</a>
+            <a href="#tools">Tools</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero-wrapper">
+            <section class="hero">
+                <div class="shape shape-circle" style="width: 300px; height: 300px; top: 10%; left: 5%;"></div>
+                <div class="shape shape-circle" style="width: 200px; height: 200px; bottom: 15%; right: 8%;"></div>
+                <div class="shape shape-circle" style="width: 150px; height: 150px; top: 60%; right: 5%;"></div>
+
+                <div class="hero-content">
+                    <h1 class="hero-title">Creative Visionary</h1>
+                    <h2 class="hero-tagline" font="poppins">Where design, technology, and narrative converge to create extraordinary
+                        experiences</h2>
+                    
+                    
+                </div>
+            </section>
+        </section>
+
+        <!-- PORTFOLIO SECTION -->
+        <section id="portfolio" class="portfolio-section">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="image1.png" alt="Architectural Visualization">
+                    <div class="portfolio-caption">Poster For A Photography Competetion</div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="image2.png" alt="Corporate Branding">
+                    <div class="portfolio-caption">Calender Poster - National Sports Day</div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="image4.jpg" alt="Motion Graphics">
+                    <div class="portfolio-caption">50 Days Left Poster For An Event</div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="image3.jpg" alt="Digital Art">
+                    <div class="portfolio-caption">Registration Closed Poster - Theme-Anime</div>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <section id="skills" class="skills-section">
+            <h2 class="section-title">Expertise & Vision</h2>
+            <div class="skills-content">
+                <p>I am a <span class="highlight">creative professional</span> with a passion for blending aesthetic
+                    excellence with technical precision.</p>
+                <p>Currently pursuing advanced studies in digital arts, I specialize in creating compelling visual
+                    experiences that engage and inspire.</p>
+                <p style="margin-top: 50px; margin-bottom: 50px;">
+                    <strong>Open for collaboration in:</strong><br><br>
+                    <span class="highlight">High-End Video Editing</span><br>
+                    <span class="highlight">Strategic Graphic Design</span><br>
+                    <span class="highlight">Responsive Web Design</span>
+                </p>
+                <p>Let's collaborate to bring your vision to life with precision, creativity, and unwavering attention
+                    to detail.</p>
+            </div>
+        </section>
+
+        <!-- TOOLS SECTION -->
+        <section id="tools" class="tools-section">
+            <h2 class="section-title">Creative Arsenal</h2>
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <img src="https://img.icons8.com/color/96/adobe-photoshop.png" alt="Photoshop">
+                    <h3>Photoshop</h3>
+                </div>
+                <div class="tool-item">
+                    <img src="https://img.icons8.com/color/96/figma.png" alt="Figma">
+                    <h3>Figma</h3>
+                </div>
+                <div class="tool-item">
+                    <img src="https://img.icons8.com/color/96/canva.png" alt="Canva">
+                    <h3>Canva</h3>
+                </div>
+                <div class="tool-item">
+                    <img src="https://img.icons8.com/color/96/adobe-premiere-pro.png" alt="Premiere Pro">
+                    <h3>Premiere Pro</h3>
+                </div>
+                <div class="tool-item">
+                    <img src="https://img.icons8.com/color/96/visual-studio-code-2019.png" alt="VS Code">
+                    <h3>VS Code</h3>
+                </div>
+                <div class="tool-item">
+                    <img src="https://img.icons8.com/color/96/adobe-after-effects--v1.png" alt="After Effects">
+                    <h3>After Effects</h3>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 SWASTIK. Creative Design & Technology. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // SKILLS CONTENT ANIMATION
+// Set the body class to 'loading' immediately to hide everything but the preloader
+    document.body.classList.add('loading');
+    
+    // Use window.onload to ensure all assets (including external icons and local images) are loaded 
+    window.onload = function() {
+        // --- 1. PRELOADER FADE OUT (Starts only after everything is loaded) ---
+        gsap.to('#preloader', {
+            opacity: 0,
+            duration: 1,
+            ease: 'power2.out',
+            onComplete: () => {
+                // IMPORTANT: Remove the loading class AND the preloader element after fade out
+                document.body.classList.remove('loading');
+                document.getElementById('preloader').remove();
+            }
+        });
+
+        // --- 2. INITIAL HERO ANIMATION (Now starts immediately after the loading screen fades) ---
+        gsap.from(['.hero-title', '.hero-tagline', '.hero-cta'], {
+            opacity: 0,
+            y: 30,
+            stagger: 0.2,
+            duration: 0.8,
+            ease: 'power2.out',
+            delay: 0.2 // Small delay after fade for aesthetic transition
+        });
+        
+        // --- 3. CUSTOM CURSOR & ScrollTriggers (The rest of your original code) ---
+        // ... (Keep all your existing GSAP animations and cursor logic here) ...
+        
+        // CUSTOM CURSOR
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+
+        // MAGNETIC CURSOR ON INTERACTIVE ELEMENTS
+        const interactiveElements = document.querySelectorAll('a, button, .portfolio-item, .tool-item');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+            });
+        });
+
+        // HEADER ANIMATION
+        gsap.from('header', {
+            y: -80,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out'
+        });
+
+        // HERO PARALLAX ON SCROLL
+        gsap.to('.hero-content', {
+            scrollTrigger: {
+                trigger: '.hero-wrapper',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 2
+            },
+            y: 200,
+            opacity: 0.2,
+            scale: 0.8,
+            ease: 'none'
+        });
+        
+        // SHAPES PARALLAX ON SCROLL
+        gsap.to('.shape', {
+            scrollTrigger: {
+                trigger: '.hero-wrapper',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 2
+            },
+            y: 250,
+            ease: 'none'
+        });
+        
+        // FLOATING SHAPES CONTINUOUS MOVEMENT
+        gsap.utils.toArray('.shape').forEach((shape) => {
+            gsap.to(shape, {
+                y: () => gsap.utils.random(-100, 100),
+                x: () => gsap.utils.random(-50, 50),
+                duration: gsap.utils.random(8, 12),
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut'
+            });
+        });
+        
+        // SECTION TITLE ANIMATION
+        document.querySelectorAll('.section-title').forEach(title => {
+            gsap.from(title, {
+                scrollTrigger: {
+                    trigger: title,
+                    start: 'top 80%',
+                    end: 'top 40%',
+                    scrub: 1
+                },
+                y: 60,
+                opacity: 0,
+                duration: 1.2,
+                ease: 'power3.out'
+            });
+        });
+
+        // PORTFOLIO ITEMS STAGGERED ANIMATION
+        gsap.from('.portfolio-item', {
+            scrollTrigger: {
+                trigger: '.portfolio-grid',
+                start: 'top 75%',
+                end: 'top 20%',
+                scrub: 1
+            },
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: 'power3.out'
+        });
+
+        // SKILLS CONTENT & HIGHLIGHT ANIMATION
+        gsap.from('.skills-content p', {
+            scrollTrigger: {
+                trigger: '.skills-section',
+                start: 'top 60%',
+                end: 'top 20%',
+                scrub: 1
+            },
+            y: 50,
+            opacity: 0,
+            stagger: 0.15,
+            ease: 'power3.out'
+        });
+
+        gsap.to('.highlight::after', {
+            scrollTrigger: {
+                trigger: '.skills-section',
+                start: 'top 40%',
+                end: 'center center',
+                scrub: 1.5
+            },
+            width: '100%',
+            opacity: 1,
+            stagger: 0.1,
+            ease: 'power2.out'
+        });
+
+        // TOOLS ITEMS ANIMATION
+        gsap.from('.tool-item', {
+            scrollTrigger: {
+                trigger: '.tools-grid',
+                start: 'top 75%',
+                end: 'top 20%',
+                scrub: 1
+            },
+            y: 80,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out'
+        });
+
+        // SMOOTH SCROLL LINKS
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    gsap.to(window, {
+                        scrollTo: { y: target, offsetY: 80 },
+                        duration: 1.5,
+                        ease: 'power2.inOut'
+                    });
+                }
+            });
+        });
+    };
+    </script>
+</body>
+
+</html>
