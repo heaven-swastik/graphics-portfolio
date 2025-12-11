@@ -825,82 +825,103 @@
 <section id="portfolio" class="portfolio-section">
     <h2 class="section-title scroll-fade-in">Featured Projects</h2>
 
-    <!-- Posters Section -->
-    <h3 class="portfolio-category scroll-fade-in">Posters</h3>
+    <!-- Filter Options -->
+    <div class="portfolio-filters">
+        <button class="filter-btn" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="posters">Posters</button>
+        <button class="filter-btn" data-filter="thumbnails">Thumbnails</button>
+        <button class="filter-btn" data-filter="certificates">Certificates</button>
+    </div>
+
+    <!-- Portfolio Grid -->
     <div class="portfolio-grid">
-        <div class="portfolio-item scroll-scale-in">
+        <!-- Posters -->
+        <div class="portfolio-item scroll-scale-in" data-category="posters">
             <img src="image1.png" alt="Architectural Visualization">
             <div class="portfolio-caption">Poster For A Photography Competetion</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="posters">
             <img src="image2.png" alt="Corporate Branding">
             <div class="portfolio-caption">Calender Poster - National Sports Day</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="posters">
             <img src="image4.jpg" alt="Motion Graphics">
             <div class="portfolio-caption">50 Days Left Poster For An Event</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="posters">
             <img src="image3.jpg" alt="Digital Art">
             <div class="portfolio-caption">Registration Closed Poster - Theme-Anime</div>
         </div>
-    </div>
 
-    <!-- Thumbnails Section -->
-    <h3 class="portfolio-category scroll-fade-in">Thumbnails</h3>
-    <div class="portfolio-grid">
-        <div class="portfolio-item scroll-scale-in">
+        <!-- Thumbnails -->
+        <div class="portfolio-item scroll-scale-in" data-category="thumbnails">
             <img src="image5.jpg" alt="Digital Art">
             <div class="portfolio-caption">Youtube Thumbnail - Politics</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="thumbnails">
             <img src="image6.jpg" alt="Digital Art">
             <div class="portfolio-caption">Youtube Thumbnail - Gaming</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="thumbnails">
             <img src="image7.png" alt="Digital Art">
             <div class="portfolio-caption">Youtube Thumbnail - Challenge</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="thumbnails">
             <img src="image8.png" alt="Digital Art">
             <div class="portfolio-caption">Youtube Thumbnail - Minecraft</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="thumbnails">
             <img src="image9.png" alt="Digital Art">
             <div class="portfolio-caption">Youtube Thumbnail - Tech</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="thumbnails">
             <img src="image10.png" alt="Digital Art">
             <div class="portfolio-caption">Youtube Thumbnail - Documentary</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="thumbnails">
             <img src="image11.png" alt="Digital Art">
             <div class="portfolio-caption">Youtube Thumbnail - Busyness</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="thumbnails">
             <img src="image12.png" alt="Digital Art">
             <div class="portfolio-caption">Youtube Thumbnail - Minecraft Player</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="thumbnails">
             <img src="image13.png" alt="Digital Art">
             <div class="portfolio-caption">Youtube Thumbnail - Gaming</div>
         </div>
-    </div>
 
-    <!-- Certificates Section -->
-    <h3 class="portfolio-category scroll-fade-in">Certificates</h3>
-    <div class="portfolio-grid">
-        <div class="portfolio-item scroll-scale-in">
+        <!-- Certificates -->
+        <div class="portfolio-item scroll-scale-in" data-category="certificates">
             <img src="cert.png" alt="Digital Art">
             <div class="portfolio-caption">Certificate Design - Coding Competition</div>
         </div>
-        <div class="portfolio-item scroll-scale-in">
+        <div class="portfolio-item scroll-scale-in" data-category="certificates">
             <img src="cert2.png" alt="Digital Art">
             <div class="portfolio-caption">Certificate Design - Photography Competition</div>
         </div>
     </div>
-
 </section>
+
+<!-- Optional JS for Filtering -->
+<script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.portfolio-item');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-filter');
+            items.forEach(item => {
+                if(filter === 'all' || item.dataset.category === filter){
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
 
 
 
@@ -1072,6 +1093,7 @@
 </body>
 
 </html>
+
 
 
 
