@@ -98,6 +98,33 @@
             transform: translateY(40px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
+.portfolio-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: none;
+    background: linear-gradient(to right, #ffd700 0%, #fff 50%, #ffd700 100%);
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: linear-gradient(to right, #fff 0%, #ffd700 50%, #fff 100%);
+    transform: scale(1.05);
+}
+
+.filter-btn.active {
+    background: #ffd700; /* solid golden yellow for active filter */
+    color: #000;
+}
 
         .scroll-fade-in.visible {
             opacity: 1;
@@ -1093,6 +1120,7 @@
 </body>
 
 </html>
+
 
 
 
