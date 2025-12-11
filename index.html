@@ -822,7 +822,8 @@
 
 <!-- PORTFOLIO SECTION -->
 <section id="portfolio" class="portfolio-section">
-    <h2 class="section-title scroll-fade-in">Featured Projects</h2>
+
+    <h2 class="section-title scroll-fade-in gold-title">Featured Projects</h2>
 
     <div class="portfolio-grid">
 
@@ -847,101 +848,92 @@
 
         <!-- Category: YouTube Thumbnails -->
         <div class="portfolio-category">YouTube Thumbnails</div>
+
         <div class="portfolio-item scroll-scale-in">
             <img src="image5.jpg" alt="Politics Thumbnail">
             <div class="portfolio-caption">Politics Thumbnail</div>
         </div>
+
         <div class="portfolio-item scroll-scale-in">
             <img src="image6.jpg" alt="Gaming Thumbnail">
             <div class="portfolio-caption">Gaming Thumbnail</div>
         </div>
+
         <div class="portfolio-item scroll-scale-in">
-            <img src="image7.jpg" alt="Challenge Thumbnail">
+            <img src="image7.png" alt="Challenge Thumbnail">
             <div class="portfolio-caption">Challenge Thumbnail</div>
         </div>
+
         <div class="portfolio-item scroll-scale-in">
-            <img src="image8.jpg" alt="Minecraft Thumbnail">
+            <img src="image8.png" alt="Minecraft Thumbnail">
             <div class="portfolio-caption">Minecraft Thumbnail</div>
         </div>
+
         <div class="portfolio-item scroll-scale-in">
-            <img src="image9.jpg" alt="Tech Thumbnail">
+            <img src="image9.png" alt="Tech Thumbnail">
             <div class="portfolio-caption">Tech Thumbnail</div>
         </div>
+
         <div class="portfolio-item scroll-scale-in">
-            <img src="image10.jpg" alt="Documentary Thumbnail">
+            <img src="image10.png" alt="Documentary Thumbnail">
             <div class="portfolio-caption">Documentary Thumbnail</div>
         </div>
+
         <div class="portfolio-item scroll-scale-in">
-            <img src="image11.jpg" alt="Business Thumbnail">
+            <img src="image11.png" alt="Business Thumbnail">
             <div class="portfolio-caption">Business Thumbnail</div>
         </div>
+
         <div class="portfolio-item scroll-scale-in">
-            <img src="image12.jpg" alt="Minecraft Player Thumbnail">
+            <img src="image12.png" alt="Minecraft Player Thumbnail">
             <div class="portfolio-caption">Minecraft Player Thumbnail</div>
         </div>
+
         <div class="portfolio-item scroll-scale-in">
-            <img src="image13.jpg" alt="Gaming Thumbnail">
+            <img src="image13.png" alt="Gaming Thumbnail">
             <div class="portfolio-caption">Gaming Thumbnail</div>
         </div>
 
         <!-- Category: Certificates -->
         <div class="portfolio-category">Certificates</div>
+
         <div class="portfolio-item scroll-scale-in">
             <img src="cert.png" alt="Certificate Design - Coding Competition">
             <div class="portfolio-caption">Coding Competition Certificate</div>
         </div>
+
         <div class="portfolio-item scroll-scale-in">
             <img src="cert2.png" alt="Certificate Design - Photography Competition">
             <div class="portfolio-caption">Photography Competition Certificate</div>
         </div>
+
     </div>
 </section>
+
 <style>
     /* Category Heading */
-.portfolio-category {
-    grid-column: 1 / -1;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin: 30px 0 10px;
-    color: #ffffffd2;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Improve Grid Layout */
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
-    width: 100%;
-}
-
-/* Item Styling */
-.portfolio-item {
-    background: #121212;
-    padding: 10px;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.portfolio-item img {
-    width: 100%;
-    border-radius: 10px;
-    object-fit: cover;
-}
-
-.portfolio-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-/* Caption */
-.portfolio-caption {
-    margin-top: 8px;
+.gold-title {
+    font-size: 2.8rem;
+    font-weight: 700;
     text-align: center;
-    font-size: 0.95rem;
-    color: #e0e0e0;
+    margin-bottom: 40px;
+    background: linear-gradient(90deg, #f7d38d, #e6b964, #f7d38d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.gold-title::after {
+    content: "";
+    display: block;
+    margin: 12px auto 0;
+    width: 90px;
+    height: 4px;
+    background: linear-gradient(90deg, #f0c27b, #f5d7a4, #f0c27b);
+    border-radius: 3px;
+    box-shadow: 0 0 12px rgba(247, 211, 141, 0.7);
 }
 
 </style>
@@ -1114,6 +1106,7 @@
 </body>
 
 </html>
+
 
 
 
